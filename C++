@@ -1,0 +1,34 @@
+#include <iostream>
+#include <math.h>
+#include <iomanip>
+#include <limits>
+#include <fstream>
+#include <time.h>
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+
+#define N 65536
+using namespace std;
+
+int main(){
+	double xn[N], ts = 1.0/8000, real, img;
+	clock_t tempoInicial, tempoFinal;
+    double tempoGasto;
+    for (int n = 0; n <N; n++){
+      xn[n] = sin(2*M_PI*1000*n*ts) + 0.5*sin(2*M_PI*2000*n*ts + 3*M_PI/4);
+    }
+
+    tempoInicial = clock();
+    for (int m = 0; m < N; m++){
+        real = 0; img = 0;
+            for (int n = 0; n < N; n++){
+                real += xn[n] * cos(2*M_PI*n*m/N);
+                img += -1 * xn[n] * sin(2*M_PI*n*m/N);
+            }
+    }
+    tempoFinal = clock();
+  tempoGasto = ((tempoFinal-tempoInicial)/((double)CLOCKS_PER_SEC));
+    printf("Tempo em segundos: %f", tempoGasto);
+	return 0;
+}
